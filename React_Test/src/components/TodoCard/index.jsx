@@ -1,14 +1,19 @@
 import { Button, Checkbox } from "@mui/material";
-import { useState } from "react";
+import { Trash2 } from "lucide-react";
+import { useContext, useState } from "react";
+import { apiContext } from "../../../context/apiContext";
 
 
-export default function TodoCard(){
-    const [checked,setChecked] = useState(false)
+export default function TodoCard({done,text,_id}){
+    // console.log(done);
+    const {deleteData,updateData} = useContext(apiContext)
 
-    return(<div className="flex items-center gap-3 border-b-2 border-gray-500 py-2 px-2 ">
+    return(<div className="flex items-center justify-between gap-3 border-b-2 border-gray-500 py-2 px-2 w-full">
         {/* <input type="checkbox" /> */}
-        <Checkbox value={checked} onChange={(e) => setChecked(e.target.checked)} />
-        <p className={`${checked && 'line-through'}`} >Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati, eum?</p>
-        <Button  variant="outlined" color="error">Delete</Button>
+        <div className="flex items-center">
+            <Checkbox checked={done} onChange={(e) => updateData(_id,{done:e.target.checked})} />
+            <p className={`${done && 'line-through'}`} >{text}</p>
+        </div>
+        <Button onClick={() => deleteData(_id)} variant="outlined" color="error"><Trash2 /></Button>
     </div>)
 }

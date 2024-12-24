@@ -3,19 +3,28 @@ import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Fab } from '@mui/material';
+import { apiContext } from '../../../context/apiContext';
 
-export default function FormDialog() {
-  const [open, setOpen] = useState(false);
+export default function FormDialog({show=false}) {
+  const {addData} = useContext(apiContext)
 
+  const [open, setOpen] = useState(show);
+  const [text,setText] = useState("")
+  
+  const handlerClickAdd = async () => {
+    await addData({text:text,done:false})
+    setText("")
+  } 
+  
   const handleClickOpen = () => {
     setOpen(true);
   };
 
   const handleClose = () => {
+    setText("")
     setOpen(false);
   };
 
@@ -45,6 +54,8 @@ export default function FormDialog() {
           <TextField
             autoFocus
             required
+            value={text}
+            onChange={(e) => setText(e.target.value)}
             margin="dense"
             id="name"
             name="Text"
@@ -56,7 +67,7 @@ export default function FormDialog() {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button type="submit">Add</Button>
+          <Button onClick={handlerClickAdd} type="submit">Add</Button>
         </DialogActions>
       </Dialog>
     </div>
