@@ -1,11 +1,14 @@
+// import TodoModel from "../model/todoModel.js"
 const TodoModel = require("../model/todoModel");
 
 const getTodo = async (req,res) => {
     try{
-        console.log("Todo list ");
-        const data = await TodoModel.find().sort("-createAt")        
-        res.status(201).json({succes:true,data:data})
+        // console.log("Todo list ");
+        const datas = await TodoModel.find().sort("-createAt")        
+        res.status(201).json({succes:true,data:datas})
     }catch(err) {
+        console.log("ERR",err);
+        
         res.status(404).json({message:err,succes:false})
     }
 }
@@ -50,6 +53,7 @@ const updateTodo = async(req,res) => {
         res.status(404).json({message:err,succes:false})
     }
 }
+
 
 
 module.exports = {addTodo,deleteTodo,updateTodo,getTodo}

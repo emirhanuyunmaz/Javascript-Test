@@ -1,3 +1,9 @@
+// import express from "express"
+// import dotenv from "dotenv"
+// import cors from "cors"
+// import mongoose from "mongoose"
+// import todoRouter from "./router/todoRouter.js"
+
 const express = require("express")
 const dotenv = require("dotenv")
 const cors = require("cors")
@@ -27,3 +33,5 @@ const port = process.env.PORT || 8000
 app.listen(port,() => {
     console.log(`Listen port ${port}`);
 })
+
+module.exports = app
